@@ -6,38 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    const apiUrl = 'https://cdh.digitalfastforward.cloud:8443/prweb/PRRestService/PegaMKTContainer/V3/Container';
+    const params = {
+    SubjectID: 'CONT-1',
+    ContextName: 'Customer',
+    ContainerName: 'NextBestAction',
+    Channel: 'Web',
+    Direction: 'Inbound',
+    AppID: 'CDHDemo',
+    Placements: 'Hero,Tile,Tile,Tile',
+  };
+    axios.get(apiUrl,{params})
+        .then(response =>{
+            console.log(response.data);
+        })
+        .catch(error => console.error(error));
+  </script>
 </head>
 <body>
-  <script>
-    axios.get('https://labour.26digitaldev.com/api/permits/pending/')
-      .then(response => {
-        const data = response.data;
-        // Access the response data and populate the body
-        populateBody(data);
-      })
-      .catch(error => console.error(error));
-
-    function populateBody(data) {
-      const containerList = data.ContainerList;
-      // Iterate over the container list and populate the body
-      containerList.forEach(container => {
-        const containerName = container.ContainerName;
-        const rankedResults = container.RankedResults;
-        // Iterate over the ranked results and populate the body
-        rankedResults.forEach(result => {
-          const issue = result.Issue;
-          const interactionID = result.InteractionID;
-          const productName = result.ProductName;
-          const customerCost = result.CustomerCost;
-          // Populate the body with the data (customize as needed)
-          const content = `Issue: ${issue}<br>
-                          Interaction ID: ${interactionID}<br>
-                          Product Name: ${productName}<br>
-                          Customer Cost: ${customerCost}<br><br>`;
-          document.body.innerHTML += content;
-        });
-      });
-    }
-  </script>
 </body>
 </html>
