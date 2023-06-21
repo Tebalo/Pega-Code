@@ -6,24 +6,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script>
-    const apiUrl = 'https://cdh.digitalfastforward.cloud:8443/prweb/PRRestService/PegaMKTContainer/V3/Container';
-    const params = {
-    SubjectID: 'CONT-1',
-    ContextName: 'Customer',
-    ContainerName: 'NextBestAction',
-    Channel: 'Web',
-    Direction: 'Inbound',
-    AppID: 'CDHDemo',
-    Placements: 'Hero,Tile,Tile,Tile',
-  };
-    axios.get(apiUrl,{params})
-        .then(response =>{
-            console.log(response.data);
-        })
-        .catch(error => console.error(error));
-  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
+    <div class="card">
+        <div class="card-body" > 
+            <img id="demo" src=""  class="col-3" display="inline-block" style="float:right;">
+          <p class="card-title col-sm-6" id="label" display="inline-block" style="font-weight:bold;"></p>
+          <p class="card-text col-sm-6" id="Benefits"display="inline-block" style="text-align: justify;"></p>
+          <a href="" class="btn btn-primary" id="button">Learn more...</a>
+        </div>
+      </div>
+    <script>   
+        const apiUrl = 'https://cdh.digitalfastforward.cloud:8443/prweb/PRRestService/PegaMKTContainer/V3/Container';
+        const params = {
+        SubjectID: 'CONT-1',
+        ContextName: 'Customer',
+        ContainerName: 'NextBestAction',
+        Channel: 'Web',
+        Direction: 'Inbound',
+        AppID: 'CDHDemo',
+        Placements: 'Hero,Tile,Tile,Tile',
+      };
+        axios.get(apiUrl,{params})
+            .then(response =>{
+                console.log(response.data);
+                document.getElementById("demo").src = response.data.ContainerList[0].RankedResults[0].ImageURL;
+                document.getElementById("label").innerHTML = response.data.ContainerList[0].RankedResults[0].Label;
+                document.getElementById("Benefits").innerHTML = response.data.ContainerList[0].RankedResults[0].Benefits;
+                document.getElementById("button").href = response.data.ContainerList[0].RankedResults[0].ClickThroughURL;
+                //var x  = response.data.ContainerList[0].RankedResults[0].Benefits;
+                console.log(response.data.ContainerList[0].RankedResults[0].ClickThroughURL);
+            })
+            .catch(error => console.error(error));
+      </script>
 </body>
 </html>
